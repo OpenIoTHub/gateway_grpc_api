@@ -17,12 +17,12 @@ message ServerInfo{
     string LoginKey = 2;
     string ConnectionType = 3;
     string LastId = 4;
-    int64 TcpPort = 5;
-    int64 KcpPort = 6;
-    int64 UdpApiPort = 7;
-    int64 KcpApiPort = 8;
-    int64 TlsPort = 9;
-    int64 GrpcPort = 10;
+    int32 TcpPort = 5;
+    int32 KcpPort = 6;
+    int32 UdpApiPort = 7;
+    int32 KcpApiPort = 8;
+    int32 TlsPort = 9;
+    int32 GrpcPort = 10;
 }
 
 message LoginResponse{
