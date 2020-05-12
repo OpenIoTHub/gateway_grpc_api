@@ -215,7 +215,7 @@ class ServerInfo extends $pb.GeneratedMessage {
 
 class LoginResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginResponse', package: const $pb.PackageName('pb'), createEmptyInstance: create)
-    ..aOS(1, 'Code', protoName: 'Code')
+    ..a<$core.int>(1, 'Code', $pb.PbFieldType.O3, protoName: 'Code')
     ..aOS(2, 'Message', protoName: 'Message')
     ..aOB(3, 'LoginStatus', protoName: 'LoginStatus')
     ..hasRequiredFields = false
@@ -237,9 +237,9 @@ class LoginResponse extends $pb.GeneratedMessage {
   static LoginResponse _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get code => $_getSZ(0);
+  $core.int get code => $_getIZ(0);
   @$pb.TagNumber(1)
-  set code($core.String v) { $_setString(0, v); }
+  set code($core.int v) { $_setSignedInt32(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
