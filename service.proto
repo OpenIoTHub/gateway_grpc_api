@@ -32,7 +32,9 @@ message LoginResponse{
 }
 
 // 服务的定义
-service HttpManager {
+service GatewayLoginManager {
     rpc LoginServerByServerInfo (ServerInfo) returns (LoginResponse) {}
     rpc LoginServerByToken (Token) returns (LoginResponse) {}
+    rpc GetOpenIoTHubToken (Empty) returns (Token) {}
+    rpc GetGateWayToken (Empty) returns (Token) {}
 }

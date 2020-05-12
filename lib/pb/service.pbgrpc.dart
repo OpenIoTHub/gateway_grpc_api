@@ -13,19 +13,28 @@ import 'package:grpc/service_api.dart' as $grpc;
 import 'service.pb.dart' as $0;
 export 'service.pb.dart';
 
-class HttpManagerClient extends $grpc.Client {
+class GatewayLoginManagerClient extends $grpc.Client {
   static final _$loginServerByServerInfo =
       $grpc.ClientMethod<$0.ServerInfo, $0.LoginResponse>(
-          '/pb.HttpManager/LoginServerByServerInfo',
+          '/pb.GatewayLoginManager/LoginServerByServerInfo',
           ($0.ServerInfo value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
   static final _$loginServerByToken =
       $grpc.ClientMethod<$0.Token, $0.LoginResponse>(
-          '/pb.HttpManager/LoginServerByToken',
+          '/pb.GatewayLoginManager/LoginServerByToken',
           ($0.Token value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
+  static final _$getOpenIoTHubToken = $grpc.ClientMethod<$0.Empty, $0.Token>(
+      '/pb.GatewayLoginManager/GetOpenIoTHubToken',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Token.fromBuffer(value));
+  static final _$getGateWayToken = $grpc.ClientMethod<$0.Empty, $0.Token>(
+      '/pb.GatewayLoginManager/GetGateWayToken',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Token.fromBuffer(value));
 
-  HttpManagerClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
+  GatewayLoginManagerClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions options})
       : super(channel, options: options);
 
   $grpc.ResponseFuture<$0.LoginResponse> loginServerByServerInfo(
@@ -44,12 +53,28 @@ class HttpManagerClient extends $grpc.Client {
         options: options);
     return $grpc.ResponseFuture(call);
   }
+
+  $grpc.ResponseFuture<$0.Token> getOpenIoTHubToken($0.Empty request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$getOpenIoTHubToken, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
+
+  $grpc.ResponseFuture<$0.Token> getGateWayToken($0.Empty request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$getGateWayToken, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
 }
 
-abstract class HttpManagerServiceBase extends $grpc.Service {
-  $core.String get $name => 'pb.HttpManager';
+abstract class GatewayLoginManagerServiceBase extends $grpc.Service {
+  $core.String get $name => 'pb.GatewayLoginManager';
 
-  HttpManagerServiceBase() {
+  GatewayLoginManagerServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.ServerInfo, $0.LoginResponse>(
         'LoginServerByServerInfo',
         loginServerByServerInfo_Pre,
@@ -64,6 +89,20 @@ abstract class HttpManagerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Token.fromBuffer(value),
         ($0.LoginResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.Token>(
+        'GetOpenIoTHubToken',
+        getOpenIoTHubToken_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.Token value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.Token>(
+        'GetGateWayToken',
+        getGateWayToken_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.Token value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.LoginResponse> loginServerByServerInfo_Pre(
@@ -76,8 +115,22 @@ abstract class HttpManagerServiceBase extends $grpc.Service {
     return loginServerByToken(call, await request);
   }
 
+  $async.Future<$0.Token> getOpenIoTHubToken_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+    return getOpenIoTHubToken(call, await request);
+  }
+
+  $async.Future<$0.Token> getGateWayToken_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+    return getGateWayToken(call, await request);
+  }
+
   $async.Future<$0.LoginResponse> loginServerByServerInfo(
       $grpc.ServiceCall call, $0.ServerInfo request);
   $async.Future<$0.LoginResponse> loginServerByToken(
       $grpc.ServiceCall call, $0.Token request);
+  $async.Future<$0.Token> getOpenIoTHubToken(
+      $grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.Token> getGateWayToken(
+      $grpc.ServiceCall call, $0.Empty request);
 }
