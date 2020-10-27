@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = ".;gateway_grpc_api";
+
 package pb;
 
 message Empty{}
