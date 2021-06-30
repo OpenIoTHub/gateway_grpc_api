@@ -17,10 +17,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GatewayLoginManagerClient interface {
-	LoginServerByServerInfo(ctx context.Context, in *ServerInfo, opts ...grpc.CallOption) (*LoginResponse, error)
+	CheckGatewayLoginStatus(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*LoginResponse, error)
 	LoginServerByToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*LoginResponse, error)
-	GetOpenIoTHubToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error)
-	GetGateWayToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error)
 }
 
 type gatewayLoginManagerClient struct {
@@ -31,9 +29,9 @@ func NewGatewayLoginManagerClient(cc grpc.ClientConnInterface) GatewayLoginManag
 	return &gatewayLoginManagerClient{cc}
 }
 
-func (c *gatewayLoginManagerClient) LoginServerByServerInfo(ctx context.Context, in *ServerInfo, opts ...grpc.CallOption) (*LoginResponse, error) {
+func (c *gatewayLoginManagerClient) CheckGatewayLoginStatus(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*LoginResponse, error) {
 	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, "/pb.GatewayLoginManager/LoginServerByServerInfo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.GatewayLoginManager/CheckGatewayLoginStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,32 +47,12 @@ func (c *gatewayLoginManagerClient) LoginServerByToken(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *gatewayLoginManagerClient) GetOpenIoTHubToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error) {
-	out := new(Token)
-	err := c.cc.Invoke(ctx, "/pb.GatewayLoginManager/GetOpenIoTHubToken", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *gatewayLoginManagerClient) GetGateWayToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error) {
-	out := new(Token)
-	err := c.cc.Invoke(ctx, "/pb.GatewayLoginManager/GetGateWayToken", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // GatewayLoginManagerServer is the server API for GatewayLoginManager service.
 // All implementations must embed UnimplementedGatewayLoginManagerServer
 // for forward compatibility
 type GatewayLoginManagerServer interface {
-	LoginServerByServerInfo(context.Context, *ServerInfo) (*LoginResponse, error)
+	CheckGatewayLoginStatus(context.Context, *Empty) (*LoginResponse, error)
 	LoginServerByToken(context.Context, *Token) (*LoginResponse, error)
-	GetOpenIoTHubToken(context.Context, *Empty) (*Token, error)
-	GetGateWayToken(context.Context, *Empty) (*Token, error)
 	mustEmbedUnimplementedGatewayLoginManagerServer()
 }
 
@@ -82,17 +60,11 @@ type GatewayLoginManagerServer interface {
 type UnimplementedGatewayLoginManagerServer struct {
 }
 
-func (UnimplementedGatewayLoginManagerServer) LoginServerByServerInfo(context.Context, *ServerInfo) (*LoginResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LoginServerByServerInfo not implemented")
+func (UnimplementedGatewayLoginManagerServer) CheckGatewayLoginStatus(context.Context, *Empty) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckGatewayLoginStatus not implemented")
 }
 func (UnimplementedGatewayLoginManagerServer) LoginServerByToken(context.Context, *Token) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginServerByToken not implemented")
-}
-func (UnimplementedGatewayLoginManagerServer) GetOpenIoTHubToken(context.Context, *Empty) (*Token, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOpenIoTHubToken not implemented")
-}
-func (UnimplementedGatewayLoginManagerServer) GetGateWayToken(context.Context, *Empty) (*Token, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetGateWayToken not implemented")
 }
 func (UnimplementedGatewayLoginManagerServer) mustEmbedUnimplementedGatewayLoginManagerServer() {}
 
@@ -107,20 +79,20 @@ func RegisterGatewayLoginManagerServer(s grpc.ServiceRegistrar, srv GatewayLogin
 	s.RegisterService(&_GatewayLoginManager_serviceDesc, srv)
 }
 
-func _GatewayLoginManager_LoginServerByServerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ServerInfo)
+func _GatewayLoginManager_CheckGatewayLoginStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GatewayLoginManagerServer).LoginServerByServerInfo(ctx, in)
+		return srv.(GatewayLoginManagerServer).CheckGatewayLoginStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.GatewayLoginManager/LoginServerByServerInfo",
+		FullMethod: "/pb.GatewayLoginManager/CheckGatewayLoginStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GatewayLoginManagerServer).LoginServerByServerInfo(ctx, req.(*ServerInfo))
+		return srv.(GatewayLoginManagerServer).CheckGatewayLoginStatus(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -143,61 +115,17 @@ func _GatewayLoginManager_LoginServerByToken_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GatewayLoginManager_GetOpenIoTHubToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GatewayLoginManagerServer).GetOpenIoTHubToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.GatewayLoginManager/GetOpenIoTHubToken",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GatewayLoginManagerServer).GetOpenIoTHubToken(ctx, req.(*Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GatewayLoginManager_GetGateWayToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GatewayLoginManagerServer).GetGateWayToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.GatewayLoginManager/GetGateWayToken",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GatewayLoginManagerServer).GetGateWayToken(ctx, req.(*Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _GatewayLoginManager_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.GatewayLoginManager",
 	HandlerType: (*GatewayLoginManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "LoginServerByServerInfo",
-			Handler:    _GatewayLoginManager_LoginServerByServerInfo_Handler,
+			MethodName: "CheckGatewayLoginStatus",
+			Handler:    _GatewayLoginManager_CheckGatewayLoginStatus_Handler,
 		},
 		{
 			MethodName: "LoginServerByToken",
 			Handler:    _GatewayLoginManager_LoginServerByToken_Handler,
-		},
-		{
-			MethodName: "GetOpenIoTHubToken",
-			Handler:    _GatewayLoginManager_GetOpenIoTHubToken_Handler,
-		},
-		{
-			MethodName: "GetGateWayToken",
-			Handler:    _GatewayLoginManager_GetGateWayToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
