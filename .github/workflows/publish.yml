@@ -12,13 +12,13 @@ jobs:
       # 拉取仓库代码
       - name: "Checkout"
         uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'beta'
       - run: flutter pub get
       # 发布插件
       - name: Publish
-        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
+        uses: sakebook/actions-flutter-pub-publisher@v1.4.1
         with:
           credential: ${{ secrets.CREDENTIAL_JSON }}
           flutter_package: false
