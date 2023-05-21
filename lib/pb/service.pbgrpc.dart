@@ -2,8 +2,8 @@
 //  Generated code. Do not modify.
 //  source: service.proto
 //
-// @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:async' as $async;
 
@@ -26,24 +26,20 @@ class GatewayLoginManagerClient extends $grpc.Client {
           ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
 
   GatewayLoginManagerClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions options})
-      : super(channel, options: options);
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$0.LoginResponse> checkGatewayLoginStatus(
       $0.Empty request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$checkGatewayLoginStatus, $async.Stream.fromIterable([request]),
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$checkGatewayLoginStatus, request,
         options: options);
-    return $grpc.ResponseFuture(call);
   }
 
   $grpc.ResponseFuture<$0.LoginResponse> loginServerByToken($0.Token request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$loginServerByToken, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$loginServerByToken, request, options: options);
   }
 }
 
