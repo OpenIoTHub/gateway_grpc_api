@@ -11,9 +11,10 @@ jobs:
     steps:
       # 拉取仓库代码
       - name: "Checkout"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.9.x'
           channel: 'beta'
       - run: flutter pub get
       # 发布插件
