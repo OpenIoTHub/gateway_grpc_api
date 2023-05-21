@@ -16,6 +16,8 @@ jobs:
         with:
           flutter-version: '3.9.x'
           channel: 'beta'
+      - run: flutter upgrade
+      - run: flutter --version
       - run: flutter pub get
       # 发布插件
       - name: Publish
