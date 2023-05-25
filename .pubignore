@@ -16,5 +16,5 @@
 
 .dart_tool
 /.github
-/pub-go
+/pb-go
 /vendor
