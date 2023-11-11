@@ -1,4 +1,3 @@
-# .github/workflows/publish.yml
 name: Publish to pub.dev
 
 on:
@@ -12,9 +11,10 @@ on:
     # If your repository contains multiple packages consider a pattern like:
     # - 'my_package_name-v[0-9]+.[0-9]+.[0-9]+*'
 
-# Publish using the reusable workflow from dart-lang.
 jobs:
   publish:
+    name: Publish on pub.dev
+    permissions:
+      id-token: write
+      contents: write
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
-    # with:
-    #   working-directory: path/to/package/within/repository
